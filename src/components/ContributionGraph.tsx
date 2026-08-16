@@ -1,11 +1,27 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 
 // ── config ────────────────────────────────────────────────────────────────────
-const GITHUB_USER = "adityaraut649";
+const GITHUB_USER = "arrautx";
 
-const COLORS = ["#161b22", "#0d2d56", "#1a5a9a", "#2281d4", "#58b0f7"] as const;
+// 5-step intensity ramps: dark gray → white in dark mode,
+// light gray → charcoal in light mode (GitHub-style).
+const DARK_COLORS = [
+  "#18181b",
+  "#27272a",
+  "#3f3f46",
+  "#52525b",
+  "#71717a",
+] as const;
+const LIGHT_COLORS = [
+  "#e8e8ea",
+  "#d4d4d8",
+  "#a1a1aa",
+  "#71717a",
+  "#3f3f46",
+] as const;
 
 const MONTH_NAMES = [
   "Jan",
@@ -80,6 +96,8 @@ function getMonthLabels(weeks: Day[][]): MonthLabel[] {
 
 // ── component ─────────────────────────────────────────────────────────────────
 export default function ContributionGraph() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [weeks, setWeeks] = useState<Day[][]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -90,6 +108,10 @@ export default function ContributionGraph() {
     y: number;
   } | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const isLight = mounted && resolvedTheme === "light";
+  const COLORS = isLight ? LIGHT_COLORS : DARK_COLORS;
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     (async () => {
@@ -120,11 +142,11 @@ export default function ContributionGraph() {
     <section
       style={{
         width: "100%",
-        background: "#111",
+        background: "var(--background)",
         borderRadius: 10,
         padding: "12px",
         fontFamily: "Inter, sans-serif",
-        color: "#8b949e",
+        color: "var(--muted-foreground)",
         boxSizing: "border-box",
       }}
     >
@@ -132,7 +154,7 @@ export default function ContributionGraph() {
         <p
           style={{
             fontSize: 13,
-            color: "#7d8590",
+            color: "var(--dim-foreground)",
             padding: "32px 0",
             textAlign: "center",
           }}
@@ -141,33 +163,35 @@ export default function ContributionGraph() {
         </p>
       )}
       {error && (
-        <p style={{ fontSize: 13, color: "#f85149" }}>Error: {error}</p>
+        <p style={{ fontSize: 13, color: "var(--muted-foreground)" }}>Error: {error}</p>
       )}
 
       {!loading && !error && (
         <div style={{ width: "100%", overflowX: "auto" }}>
           <div style={{ display: "inline-block", minWidth: "max-content" }}>
-            {/* month labels */}
-            <div style={{ display: "flex", marginBottom: 4 }}>
+            {/* month labels — anchored to their week column; labels closer
+                than 4 weeks to the previous one are skipped so text never overlaps */}
+            <div style={{ position: "relative", height: 16, marginBottom: 4 }}>
               {(() => {
                 const items: React.ReactNode[] = [];
-                let prev = 0;
+                let lastShown = -Infinity;
                 monthLabels.forEach((ml, i) => {
-                  const span = ml.weekIndex - prev;
+                  if (ml.weekIndex - lastShown < 4) return;
+                  lastShown = ml.weekIndex;
                   items.push(
                     <span
                       key={i}
                       style={{
-                        display: "inline-block",
-                        width: span * COL,
+                        position: "absolute",
+                        left: ml.weekIndex * COL,
                         fontSize: 11,
-                        color: "#7d8590",
+                        color: "var(--dim-foreground)",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {ml.label}
                     </span>,
                   );
-                  prev = ml.weekIndex;
                 });
                 return items;
               })()}
@@ -190,7 +214,7 @@ export default function ContributionGraph() {
                       const day = week[di];
                       const bg =
                         !day || day.empty
-                          ? "#0d1117"
+                          ? COLORS[0] // padding days match zero-contribution days
                           : COLORS[Math.min(day.level, 4)];
                       return (
                         <div
@@ -254,7 +278,7 @@ export default function ContributionGraph() {
                 rel="noopener noreferrer"
                 style={{
                   fontSize: 12,
-                  color: "#7d8590",
+                  color: "var(--dim-foreground)",
                   textDecoration: "none",
                 }}
               >
@@ -267,7 +291,7 @@ export default function ContributionGraph() {
                   alignItems: "center",
                   gap: 4,
                   fontSize: 11,
-                  color: "#7d8590",
+                  color: "var(--dim-foreground)",
                 }}
               >
                 Less
@@ -297,9 +321,9 @@ export default function ContributionGraph() {
             position: "fixed",
             left: tooltip.x,
             top: tooltip.y,
-            background: "#1c2128",
-            border: "0.5px solid #30363d",
-            color: "#e6edf3",
+            background: isLight ? "#ffffff" : "#18181b",
+            border: `0.5px solid ${isLight ? "#e4e4e7" : "#3f3f46"}`,
+            color: isLight ? "#18181b" : "#f4f4f5",
             borderRadius: 6,
             padding: "5px 10px",
             fontSize: 12,

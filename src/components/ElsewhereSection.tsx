@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 const links = [
   {
     label: "GitHub",
-    href: "https://github.com/adityaraut649",
+    href: "https://github.com/arrautx",
     favicon:
       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg",
   },
@@ -21,7 +21,7 @@ const links = [
   {
     label: "LinkedIn",
     href: "https://linkedin.com/in/aditya-raut-6b7988215/",
-    favicon: "https://linkedin.com/favicon.ico",
+    favicon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg",
   },
 ];
 
@@ -34,21 +34,23 @@ export default function Links() {
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-100"
+          className="group inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground py-1.5"
         >
           {link.label === "GitHub" ? (
-            <FaGithub className="h-4 w-4 text-zinc-300" />
+            <FaGithub className="h-4 w-4 text-muted-foreground" />
           ) : (
             <img
               src={link.favicon}
               alt=""
+              loading="lazy"
+              decoding="async"
               width={16}
               height={16}
               className="rounded-sm"
             />
           )}
 
-          <span className="underline decoration-zinc-800 underline-offset-4 transition-colors group-hover:decoration-zinc-300">
+          <span className="underline decoration-border underline-offset-4 transition-colors group-hover:decoration-muted-foreground">
             {link.label}
           </span>
 

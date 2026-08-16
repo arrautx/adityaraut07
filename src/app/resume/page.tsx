@@ -1,10 +1,7 @@
-// src/components/Page/ResumePage.tsx
-// Replace the Drive link below with your own Google Drive file preview URL
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const DRIVE_PREVIEW_URL =
   "https://drive.google.com/file/d/1KcQDmrq0Arfzsa_etLZjpWA8eu2HfVTU/preview";
-  
 
 const YOUR_NAME = "Aditya Raut"; // Replace with your own name
 
@@ -16,14 +13,15 @@ export default function ResumePage() {
         <div>
           <div className="w-full max-w-2xl mx-auto px-4 sm:px-5 animate-fade-in-blur pt-20 sm:pt-24 pb-6">
             <Link
-              to="/"
+              href="/"
               className="
                 inline-flex
                 items-center
                 gap-2
+                min-h-11
                 text-sm
-                text-neutral-500
-                hover:text-neutral-200
+                text-dim-foreground
+                hover:text-muted-foreground
                 transition-colors
                 mb-6
                 "
@@ -31,7 +29,7 @@ export default function ResumePage() {
               ← Home
             </Link>
             <p
-              className="text-primary/60 text-[11px] uppercase tracking-[0.2em] font-normal mb-1.5"
+              className="text-dim-foreground text-[11px] uppercase tracking-[0.2em] font-normal mb-1.5"
               style={{
                 opacity: 1,
                 transform: "translateY(0px)",
@@ -43,13 +41,13 @@ export default function ResumePage() {
             </p>
 
             <h1
-              className="text-3xl sm:text-[40px] tracking-tight text-[#f5f5f5]"
+              className="text-3xl sm:text-4xl tracking-tight text-foreground"
               style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               Resume
             </h1>
 
-            <p className="text-[#8b8b8b] text-[15px] leading-relaxed mt-3 max-w-prose">
+            <p className="text-dim-foreground text-sm leading-relaxed mt-3 max-w-prose">
               A concise snapshot of what I've built and where I've worked.
             </p>
           </div>

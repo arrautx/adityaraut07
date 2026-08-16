@@ -9,7 +9,7 @@ export function Avatar() {
       {/* Avatar */}
       <div
         onClick={() => setOpen(true)}
-        className="border border-white/10 rounded-[12px] p-[4px] cursor-pointer hover:brightness-90 transition duration-300"
+        className="border border-border rounded-[12px] p-[4px] cursor-pointer hover:brightness-90 transition duration-300"
       >
         <img
           src="/Avatar.png"
@@ -26,8 +26,8 @@ export function Avatar() {
           onClick={() => setOpen(false)}
         >
           <div
-            className="border border-white/10 rounded-[12px] p-[4px]"
-            style={{ backgroundColor: "#111111" }}
+            className="border border-border rounded-[12px] p-[4px]"
+            style={{ backgroundColor: "var(--background)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <img

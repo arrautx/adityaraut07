@@ -1,14 +1,14 @@
 export default function AboutSection() {
   return (
-    <section className="mt-6 sm:mt-10">
-      <div className="mt-6 space-y-2.5 text-[15px] leading-[1.7] text-[#999]">
+    <section>
+      <div className="space-y-3 text-base leading-relaxed text-muted-foreground">
         <p className="flex gap-2.5">
           {/* <span className="select-none font-mono text-[11px] leading-[1.9] text-[#444]">
             01
           </span> */}
           <span>
-            I love to <span className="font-medium text-[#f1f1f1]">build</span>{" "}
-            and <span className="font-medium text-[#f1f1f1]">learn</span>,
+            I love to <span className="font-medium text-foreground">build</span>{" "}
+            and <span className="font-medium text-foreground">learn</span>,
             currently with{" "}
             {[
               {
@@ -107,7 +107,7 @@ export default function AboutSection() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/skill relative inline-flex items-baseline gap-1 font-semibold text-[#f1f1f1] underline decoration-[#333] decoration-1 underline-offset-4 transition-colors hover:decoration-[#f1f1f1]"
+                  className="group/skill relative inline-flex items-baseline gap-1 font-semibold text-foreground underline decoration-border-strong decoration-1 underline-offset-4 transition-colors hover:decoration-muted-foreground"
                 >
                   <span className="inline-block size-3 shrink-0 translate-y-0.5 opacity-60 transition-opacity group-hover/skill:opacity-100">
                     {icon}

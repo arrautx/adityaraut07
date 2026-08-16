@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Globe } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import { TECH_ICONS } from "@/lib/techIcons";
 
 interface Project {
   title: string;
@@ -14,18 +15,19 @@ interface Project {
   github: string;
   live?: string;
   status?: "live" | "building" | "not-started";
+  comingSoon?: boolean;
 }
 
 const projects: Project[] = [
   {
-    title: "VengenceUI",
+    title: "Calidraw",
     description:
-      "VengenceUI helps you build your landing page by providing animated beautiful components.",
+      "A real-time collaborative whiteboard that allows multiple users to join the same room",
     imageSrc: "/project2.png",
     backgroundImage: "/b1.png",
-    tags: ["Next.js", "React", "TypeScript", "Tailwind"],
-    github: "https://github.com/adityaraut649",
-    live: "https://github.com/adityaraut649",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind" , "Prisma" , "Postgresql" , "Websocket"],
+    github: "https://github.com/arrautx",
+    live: "https://github.com/arrautx",
     status: "live",
   },
   {
@@ -35,7 +37,7 @@ const projects: Project[] = [
     imageSrc: "/project1.png",
     backgroundImage: "/b2.png",
     tags: ["Next.js", "tldraw", "Three.js", "TypeScript"],
-    github: "https://github.com/adityaraut649",
+    github: "https://github.com/arrautx",
     status: "live",
   },
   {
@@ -45,8 +47,9 @@ const projects: Project[] = [
     imageSrc: "/coming.png",
     backgroundImage: "/b3.png",
     tags: ["Next.js", "TypeScript", "Tailwind", "Prisma", "Bun"],
-    github: "https://github.com/adityaraut649",
+    github: "https://github.com/arrautx",
     status: "building",
+    comingSoon: true,
   },
   {
     title: "Inquiro",
@@ -55,37 +58,44 @@ const projects: Project[] = [
     imageSrc: "/project3.png",
     backgroundImage: "/b4.png",
     tags: ["Next.js", "TypeScript", "Radix UI", "Gemini"],
-    github: "https://github.com/adityaraut649",
+    github: "https://github.com/arrautx",
     status: "not-started",
-  },
-  {
-    title: "RepoLens",
-    description:
-      "An all-in-one GitHub explorer with tech stack insights, code browsing, and analytics.",
-    imageSrc: "/Screenshot%202026-02-07%20225125.png",
-    backgroundImage: "/b5.png",
-    tags: ["Next.js", "Tailwind", "Radix UI", "Recharts"],
-    github: "https://github.com/adityaraut649",
-    status: "live",
-  },
-  {
-    title: "MotionSuite",
-    description:
-      "motion-suite is a lightweight animation toolkit for React + Framer Motion.",
-    imageSrc: "/project-image/image copy 2.png",
-    backgroundImage: "/b1.png",
-    tags: ["TypeScript", "Next.js", "React", "Framer Motion"],
-    github: "https://github.com/adityaraut649",
-    live: "https://github.com/adityaraut649",
-    status: "live",
   },
 ];
 
 const statusConfig = {
-  live: { dot: "bg-emerald-500", label: "Live" },
-  building: { dot: "bg-red-500", label: "Building" },
-  "not-started": { dot: "bg-zinc-400", label: "Not Started" },
+  live: { dot: "bg-status-live", label: "Live" },
+  building: { dot: "bg-status-building", label: "Building" },
+  "not-started": { dot: "bg-status-idle", label: "Not Started" },
 };
+
+function ComingSoonThumb() {
+  return (
+    <div className="relative size-full bg-gradient-to-b from-zinc-900 via-zinc-950 to-black">
+      {/* dot grid pattern */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #52525b 1px, transparent 1px)",
+          backgroundSize: "16px 16px",
+        }}
+      />
+      {/* soft glow behind text */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute size-40 rounded-full bg-zinc-600/20 blur-3xl" />
+        <div className="relative text-center select-none">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-dim-foreground">
+            Stay Tuned
+          </p>
+          <p className="mt-2 text-xl sm:text-2xl font-bold uppercase tracking-widest text-foreground">
+            Coming Soon
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ProjectCard({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false);
@@ -93,12 +103,12 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <div
-      className="flex flex-col group cursor-pointer"
+      className="flex flex-col h-full group cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image card */}
-      <div className="relative w-full aspect-[1.4] rounded-xl border border-zinc-800 bg-[#111111] shadow-sm p-4 pb-0 flex flex-col overflow-hidden transition-all duration-300 hover:border-zinc-700">
+      <div className="relative w-full aspect-[1.4] rounded-xl border border-border bg-background shadow-sm p-4 pb-0 flex flex-col overflow-hidden transition-all duration-300 hover:border-border-strong">
         {/* Ambient background */}
         {project.backgroundImage && (
           <motion.div
@@ -126,7 +136,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Floating screenshot */}
         <motion.div
-          className="absolute bottom-0 left-1/2 w-[85%] rounded-t-[10px] bg-[#18181b] shadow-[0_-8px_30px_rgba(0,0,0,0.5)] z-20 border border-zinc-800 border-b-0"
+          className="absolute bottom-0 left-1/2 w-[85%] rounded-t-[10px] bg-card shadow-[0_-8px_30px_rgba(0,0,0,0.5)] z-20 border border-border border-b-0"
           animate={{
             height: hovered ? "70%" : "78%",
             y: hovered ? 4 : 0,
@@ -135,87 +145,101 @@ function ProjectCard({ project }: { project: Project }) {
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
           <div className="size-full overflow-hidden rounded-t-[9px]">
-            <img
-              src={project.imageSrc}
-              alt={`${project.title} preview`}
-              className="size-full object-cover"
-            />
+            {project.comingSoon ? (
+              <ComingSoonThumb />
+            ) : (
+              <img
+                src={project.imageSrc}
+                alt={`${project.title} preview`}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover"
+              />
+            )}
           </div>
         </motion.div>
       </div>
 
       {/* Content below card — overlaps up slightly */}
-      <div className="-mt-1 pt-5 flex flex-col px-0.5">
-        <div className="flex items-center justify-between">
-          <h3 className="text-[15px] font-semibold text-zinc-100">
+      <div className="-mt-1 pt-5 flex flex-1 flex-col px-0.5">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-base font-semibold text-foreground leading-tight">
             {project.title}
           </h3>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm border border-zinc-800 bg-zinc-900">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm border border-border bg-card/90 shrink-0">
             <div className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
-            <span className="text-[11px] font-medium text-zinc-300">
+            <span className="text-xs font-medium text-muted-foreground">
               {cfg.label}
             </span>
           </div>
         </div>
 
-        <p className="mt-1.5 text-[13px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+        <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
           {project.description}
         </p>
 
-        {/* Tags row — scrollable so they never wrap */}
-        <div className="flex gap-1.5 mt-3 overflow-x-auto no-scrollbar pb-0.5">
+        {/* Tags row — text labels with optional logo, wraps instead of clipping */}
+        <div className="flex flex-wrap gap-1.5 mt-3 pb-0.5">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="shrink-0 text-[11px] text-zinc-300 border border-zinc-800 rounded-sm px-2 py-1 bg-zinc-900"
+              className="inline-flex shrink-0 items-center gap-1.5 text-xs text-foreground rounded-md border border-border px-2.5 py-1 bg-card/90"
             >
+              {TECH_ICONS[tag] && (
+                <img src={TECH_ICONS[tag]} alt="" className="size-3 shrink-0" />
+              )}
               {tag}
             </span>
           ))}
         </div>
 
-        {/* Links row */}
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm mt-2 border border-zinc-800 bg-zinc-900">
-          {project.live && (
+        {/* Links row — pinned to card bottom, identical padding on every card */}
+        <div className="mt-auto pt-3">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-border bg-card/90">
+            {/* Fixed-width icon slot keeps View Project aligned across cards */}
+            <div className="flex items-center gap-1.5 min-w-[70px] sm:min-w-[34px]">
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-dim-foreground hover:text-foreground transition-colors inline-flex items-center justify-center size-8 sm:size-auto"
+                  aria-label="Live site"
+                >
+                  <Globe size={14} />
+                </a>
+              )}
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-dim-foreground hover:text-foreground transition-colors inline-flex items-center justify-center size-8 sm:size-auto"
+                aria-label="GitHub"
+              >
+                <FaGithub size={14} />
+              </a>
+            </div>
             <a
-              href={project.live}
+              href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 transition-colors"
-              aria-label="Live site"
+              className="ml-auto min-h-8 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors"
             >
-              <Globe size={14} />
+              View Project
+              <svg
+                viewBox="0 0 24 24"
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
             </a>
-          )}
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 transition-colors"
-            aria-label="GitHub"
-          >
-            <FaGithub size={14} />
-          </a>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-auto flex items-center gap-1 text-[12px] font-medium text-zinc-500 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors"
-          >
-            View Project
-            <svg
-              viewBox="0 0 24 24"
-              className="w-3 h-3"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -230,16 +254,18 @@ export default function ProjectsSection({
   const visible = showAll ? projects : projects.slice(0, 4);
 
   return (
-    <section className="mt-8">
-      <style>{`.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}`}</style>
-
-      <p className="mt-3 inline-block border border-dashed border-[#737373]/30 bg-[#0f0f0f] px-4 py-[7px] text-[13px] font-mono text-zinc-400 rounded-none">
-        I love designing and building thoughtful, production-grade applications.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12 pt-6">
+    <section>
+      {!showAll && (
+        <p className="mt-3 inline-block border border-dashed border-border-strong bg-card-inset px-4 py-2 text-sm font-mono text-muted-foreground rounded-none">
+          I love designing and building thoughtful, production-grade
+          applications.
+        </p>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 items-stretch gap-x-6 md:gap-x-10 gap-y-8 pt-6">
         {visible.map((project, idx) => (
           <motion.div
             key={project.title}
+            className="h-full rounded-xl border border-border bg-card/90 hover:border-border-strong transition-colors p-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -250,7 +276,7 @@ export default function ProjectsSection({
         ))}
       </div>
 
-      {!showAll && (
+      {!showAll && projects.length > visible.length && (
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -260,7 +286,7 @@ export default function ProjectsSection({
         >
           <a
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-300 text-sm font-medium px-5 py-2 hover:bg-zinc-800 transition-all duration-200"
+            className="inline-flex items-center justify-center min-h-11 gap-2 rounded-lg border border-border bg-card text-muted-foreground text-sm font-medium px-5 py-2 hover:bg-accent transition-all duration-200"
           >
             View all projects
           </a>
