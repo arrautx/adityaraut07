@@ -1,14 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { TECH_ICONS } from "@/lib/techIcons";
 
 const experiences = [
   {
-    company: "KodNest",
+    company: "KodNest Technology",
     role: "Full Stack Developer Intern",
-    duration: "Aug, 2025 - May, 2026",
-    location: "Bangalore, India - Remote",
-    image: "./KodNest.jpg",
+    duration: "Aug 2025 – May 2026",
+    location: "Bangalore, India · Remote",
+    image: "/KodNest.jpg",
     badge: "Intern",
+    current: true,
 
     bullets: [
       "Architected 'SalesSavvy,' a full-scale e-commerce platform, integrating a React frontend with a Spring Boot backend to handle seamless product management and user transactions.",
@@ -35,10 +39,11 @@ const experiences = [
   {
     company: "Personal Work",
     role: "Freelance",
-    duration: "Nov, 2025 - Nov, 2025",
-    location: "Bangalore, India - Remote",
-    image: "./Freelance.jpg",
+    duration: "Nov 2025 – Nov 2025",
+    location: "Bangalore, India · Remote",
+    image: "/Freelance.jpg",
     badge: "Freelance",
+    current: false,
 
     bullets: [],
     stack: [],
@@ -86,10 +91,13 @@ export default function ExperiencePage() {
       {/* ── Entries ── */}
       <div className="w-full max-w-2xl mx-auto px-4 sm:px-5 pb-14">
         <div className="flex flex-col gap-4">
-          {experiences.map((exp) => (
-            <article
+          {experiences.map((exp, idx) => (
+            <motion.article
               key={exp.company}
-              className="rounded-xl border border-border bg-card/90 p-4 sm:p-5 flex flex-col gap-4"
+              className="rounded-xl border border-border bg-card/90 p-4 sm:p-5 flex flex-col gap-4 transition-colors hover:border-border-strong"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
             >
               <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                 <div className="flex items-center gap-3 min-w-0">
@@ -114,6 +122,15 @@ export default function ExperiencePage() {
                           {exp.badge}
                         </span>
                       )}
+
+                      {exp.current && (
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-border bg-card-inset">
+                          <span className="size-1.5 rounded-full bg-status-live" />
+                          <span className="text-[11px] font-medium text-muted-foreground">
+                            Current
+                          </span>
+                        </span>
+                      )}
                     </div>
 
                     <p className="text-xs text-dim-foreground mt-0.5">{exp.role}</p>
@@ -121,7 +138,9 @@ export default function ExperiencePage() {
                 </div>
 
                 <div className="text-right shrink-0">
-                  <p className="text-sm text-muted-foreground">{exp.duration}</p>
+                  <p className="text-sm text-muted-foreground tabular-nums">
+                    {exp.duration}
+                  </p>
                   <p className="text-xs text-dim-foreground mt-0.5">{exp.location}</p>
                 </div>
               </div>
@@ -159,7 +178,7 @@ export default function ExperiencePage() {
                   ))}
                 </div>
               )}
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

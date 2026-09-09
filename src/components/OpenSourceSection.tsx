@@ -97,42 +97,58 @@ export default function OpenSourceSection({
   return (
     <section>
       <div
-        className={`flex flex-wrap items-center gap-x-4 gap-y-3 mb-5 ${showAll ? "justify-start" : "justify-between"}`}
+        className={`flex flex-wrap items-center gap-x-4 gap-y-3 mb-5 ${showAll ? "justify-start" : ""}`}
       >
         {!showAll && (
-          <h2
-            className="text-foreground text-xl sm:text-2xl leading-none tracking-wide"
-            style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400 }}
-          >
-            Open Source Contributions
-          </h2>
+          <>
+            <h2
+              className="text-foreground text-xl sm:text-2xl leading-none tracking-wide whitespace-nowrap"
+              style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400 }}
+            >
+              Open Source Contributions
+            </h2>
+
+            <span
+              aria-hidden="true"
+              className="h-px min-w-6 flex-1 border-t border-dashed border-border-strong"
+            />
+          </>
         )}
 
         <div
-          className="flex items-center gap-1"
+          className="flex items-center gap-1 p-1 rounded-lg border border-border bg-card-inset select-none"
           role="tablist"
           aria-label="Filter contributions by state"
         >
-          {FILTERS.map(({ key, label }) => (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={filter === key}
-              onClick={() => setFilter(key)}
-              className={`min-h-9 rounded-full px-3.5 text-xs font-medium transition-colors inline-flex items-center ${
-                filter === key
-                  ? "bg-foreground text-background"
-                  : "text-dim-foreground hover:text-muted-foreground"
-              }`}
-            >
-              {label}
-              <span
-                className={`ml-1.5 tabular-nums ${filter === key ? "text-muted-foreground" : "text-dim-foreground"}`}
+          {FILTERS.map(({ key, label }) => {
+            const isActive = filter === key;
+            return (
+              <button
+                key={key}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setFilter(key)}
+                className={`inline-flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 min-h-8 text-xs font-medium transition-colors ${
+                  isActive
+                    ? "bg-foreground text-background"
+                    : "text-dim-foreground hover:text-foreground hover:bg-accent/60"
+                }`}
               >
-                {loading ? "" : counts[key]}
-              </span>
-            </button>
-          ))}
+                <span
+                  aria-hidden="true"
+                  className={`size-1.5 rounded-full shrink-0 ${STATE_DOT[key]}`}
+                />
+                {label}
+                <span
+                  className={`ml-0.5 tabular-nums ${
+                    isActive ? "text-background/60" : "text-dim-foreground"
+                  }`}
+                >
+                  {loading ? "" : counts[key]}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 

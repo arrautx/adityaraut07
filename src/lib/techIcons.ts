@@ -20,4 +20,22 @@ export const TECH_ICONS: Record<string, string> = {
   "HTML & CSS": "/tech-icons/mono-HTML-CSS.svg",
   Spring: "/tech-icons/mono-Spring.svg",
   "Spring Boot": "/tech-icons/mono-Spring Boot.svg",
+
+  // Tech Stack pills
+  "Node.js": "/tech-icons/nodejs.svg",
+  PostgreSQL: "/tech-icons/postgresql.svg",
+  MongoDB: "/tech-icons/mongodb.svg",
+  Redis: "/tech-icons/redis.svg",
+  Git: "/tech-icons/Git.svg",
+  GitHub: "/tech-icons/mono-dark-github.svg",
+  Figma: "/tech-icons/figma.svg",
+  Linux: "/tech-icons/linux.svg",
+  Expo: "/tech-icons/mono-dark-expo.svg",
+  Django: "/tech-icons/mono-dark-django.svg",
+  Zustand: "/tech-icons/mono-dark-zustand.svg",
+  "TanStack Query": "/tech-icons/mono-dark-tanstack.svg",
+  Postman: "/tech-icons/postman.svg",
+  "shadcn/ui": "/tech-icons/mono-dark-shadcn.svg",
+  Motion: "/tech-icons/mono-dark-motion.svg",
+  GSAP: "/tech-icons/gsap.svg",
 };

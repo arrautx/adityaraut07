@@ -78,7 +78,7 @@ export default function Footer() {
   }, [paused, prefersReducedMotion]);
 
   return (
-    <footer className="mt-16 border-t border-border">
+    <footer className="mt-10 sm:mt-12 md:mt-14 border-t border-border">
       <div className="flex flex-col items-center justify-center py-16 px-4">
         <div
           className="max-w-[580px] text-center rounded-lg focus:outline-none focus-visible:ring-1 focus-visible:ring-border-strong"

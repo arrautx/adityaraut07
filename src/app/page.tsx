@@ -1,7 +1,7 @@
 import ContributionGraph from "@/components/ContributionGraph";
 import ProfileHeader from "@/components/ProfileHeader";
 import ProjectsSection from "@/components/ProjectsSection";
-import SkillsSection from "@/components/SkillsSection";
+import TechStack from "@/components/TechStack";
 import ElsewhereSection from "@/components/ElsewhereSection";
 import Footer from "@/components/Footer";
 import Oneko from "@/components/Oneko";
@@ -62,7 +62,7 @@ export default function Home() {
 
           <div className="mt-6 sm:mt-10">
             <div className="mb-5">
-              <p className="text-md text-dim-foreground">
+              <p className="text-sm text-dim-foreground">
                 Here are my{" "}
                 <span className="font-medium text-foreground">socials</span>
               </p>
@@ -101,45 +101,23 @@ export default function Home() {
           </div>
           <div className="border-t border-border my-6 sm:my-8"></div> */}
 
-          <div className="border-t border-border my-6 sm:my-8"></div>
-
-          <section id="experience" className="mt-6 sm:mt-10 scroll-mt-20">
-            <p
-              className="text-foreground text-xl sm:text-2xl leading-none tracking-wide mb-5"
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontWeight: 400,
-              }}
-            >
-              Experience
-            </p>
+          <section id="experience" className="mt-10 sm:mt-12 md:mt-14 scroll-mt-20">
             <ExperienceSection />
           </section>
 
-
-          <div className="border-t border-border my-6 sm:my-8"></div>
-          <div id="projects" className="scroll-mt-20">
+          <div id="projects" className="mt-10 sm:mt-12 md:mt-14 scroll-mt-20">
             <ProjectsSection />
           </div>
-          <div className="border-t border-border my-6 sm:my-8"></div>
-          <OpenSourceSection />
-          <div className="border-t border-border my-6 sm:my-8"></div>
-          <SkillsSection />
-          <div className="border-t border-border my-6 sm:my-8"></div>
-
-          <section className="mt-6 sm:mt-10">
-            <p
-              className="text-foreground text-xl sm:text-2xl leading-none tracking-wide mb-5"
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontWeight: 400,
-              }}
-            >
-              Contributions
-            </p>
+          <section id="contributions" className="mt-10 sm:mt-12 md:mt-14 scroll-mt-20">
             <ContributionGraph />
           </section>
+          <div className="mt-10 sm:mt-12 md:mt-14">
+            <OpenSourceSection />
+          </div>
 
+          <div className="mt-10 sm:mt-12 md:mt-14">
+            <TechStack />
+          </div>
           <Footer />
         </div>
       </div>

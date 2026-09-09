@@ -25,7 +25,7 @@ const projects: Project[] = [
       "A real-time collaborative whiteboard that allows multiple users to join the same room",
     imageSrc: "/project2.png",
     backgroundImage: "/b1.png",
-    tags: ["Next.js", "React", "TypeScript", "Tailwind" , "Prisma" , "Postgresql" , "Websocket"],
+    tags: ["Next.js","TypeScript", "Tailwind" , "Bun" ,"Prisma" ,"Radix UI"],
     github: "https://github.com/arrautx",
     live: "https://github.com/arrautx",
     status: "live",
@@ -183,7 +183,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex shrink-0 items-center gap-1.5 text-xs text-foreground rounded-md border border-border px-2.5 py-1 bg-card/90"
+              className="inline-flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground rounded-md border border-border px-2.5 py-1 bg-card/90"
             >
               {TECH_ICONS[tag] && (
                 <img src={TECH_ICONS[tag]} alt="" className="size-3 shrink-0" />
@@ -256,12 +256,34 @@ export default function ProjectsSection({
   return (
     <section>
       {!showAll && (
-        <p className="mt-3 inline-block border border-dashed border-border-strong bg-card-inset px-4 py-2 text-sm font-mono text-muted-foreground rounded-none">
-          I love designing and building thoughtful, production-grade
-          applications.
-        </p>
+        <>
+          {/* Section header — same pattern as the other sections:
+              serif heading + dashed rule + uppercase counter. */}
+          <div className="flex items-center gap-4 sm:gap-5">
+            <h2
+              className="text-foreground text-xl sm:text-2xl leading-none tracking-wide whitespace-nowrap"
+              style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400 }}
+            >
+              Projects
+            </h2>
+
+            <span
+              aria-hidden="true"
+              className="h-px min-w-6 flex-1 border-t border-dashed border-border-strong"
+            />
+
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-dim-foreground whitespace-nowrap">
+              {String(projects.length).padStart(2, "0")} Projects
+            </span>
+          </div>
+
+          <p className="mt-4 inline-block border border-dashed border-border-strong bg-card-inset px-4 py-2 text-sm font-mono text-muted-foreground rounded-none">
+            I love designing and building thoughtful, production-grade
+            applications.
+          </p>
+        </>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 items-stretch gap-x-6 md:gap-x-10 gap-y-8 pt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 items-stretch gap-x-6 md:gap-x-10 gap-y-8 pt-5">
         {visible.map((project, idx) => (
           <motion.div
             key={project.title}
@@ -282,7 +304,7 @@ export default function ProjectsSection({
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true }}
-          className="flex justify-center mt-10"
+          className="flex justify-center mt-6"
         >
           <a
             href="/projects"
